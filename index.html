@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To the Love of My Life</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #ff9a9e, #fecfef);
+            color: #333;
+            overflow-x: hidden;
+        }
+        .love-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: linear-gradient(to right, #ff758c, #ff7eb3);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        .love-card .card {
+            background: white;
+            color: #ff758c;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 500px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            animation: zoomIn 1.5s ease-in-out;
+        }
+        .love-card h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .love-card p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        .love-card button {
+            padding: 0.8rem 2rem;
+            background: #ff758c;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out, background 0.3s ease-in-out;
+        }
+        .love-card button:hover {
+            transform: scale(1.05);
+            background: #ff5e7d;
+        }
+        .container {
+            display: none;
+            max-width: 700px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+        }
+        .questions h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            color: #ff758c;
+        }
+        .question {
+            margin-bottom: 1.5rem;
+        }
+        label {
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+        input {
+            width: 100%;
+            padding: 0.9rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        input:focus {
+            border-color: #ff758c;
+            box-shadow: 0 0 5px rgba(255, 117, 140, 0.5);
+            outline: none;
+        }
+        button.submit {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 6px;
+            background: #ff758c;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+        }
+        button.submit:hover {
+            background: #ff5e7d;
+            transform: scale(1.05);
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.8);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="love-card">
+        <div class="card">
+            <h1>To the Love of My Life</h1>
+            <p>
+                My dearest, you light up my world in ways I never imagined. Every moment spent with you feels like magic, and I want you to know just how much you mean to me. This little space is a celebration of you, and I can't wait to learn more about the amazing person you are. 💖
+            </p>
+            <button id="continue">Continue</button>
+        </div>
+    </div>
+    <div class="container">
+        <section class="questions">
+            <h2>Let’s Dive In!</h2>
+            <form id="questions-form">
+                <!-- Dynamic questions generated here -->
+                <div id="questions-container"></div>
+                <button type="submit" class="submit">Submit</button>
+            </form>
+        </section>
+    </div>
+    <script>
+        // Array of questions
+        const questions = [
+            "What’s your happiest childhood memory?",
+            "Who has had the biggest impact on your life and why?",
+            "If you could live anywhere in the world, where would it be?",
+            "What does your perfect day look like?",
+            "What’s one thing you’ve always wanted to try but haven’t yet?",
+            "What’s your favorite way to relax after a long day?",
+            "What’s one thing that always makes you smile?",
+            "What’s your favorite type of movie or show to watch?",
+            "If you won the lottery, what’s the first thing you would do?",
+            "What’s your dream job or career goal?",
+            "What’s your favorite thing to do on weekends?",
+            "Do you prefer mornings or nights? Why?",
+            "What’s your favorite memory of us together?",
+            "If you could learn any skill instantly, what would it be?",
+            "What’s a random fun fact about you that most people don’t know?",
+            "If you could meet one person, dead or alive, who would it be?",
+            "What’s your favorite meal or type of cuisine?",
+            "What’s one place you’ve visited that you’d love to go back to?",
+            "What’s something you’re passionate about?",
+            "What’s a hobby you’ve always wanted to take up?",
+            "What do you like about your boyfriend?",
+            "Why didn’t you talk to him in school?",
+            "Who are your closest friends?",
+            "What’s your favorite food?",
+            "What’s your favorite location in Spain?",
+            "Who’s your favorite family member and why?",
+            "What goes through your mind most often?",
+            "Do you trust Winston?",
+            "Do you think Winston is really the boy for you?"
+        ];
+
+        // Dynamically generate the questions
+        const questionsContainer = document.getElementById("questions-container");
+        questions.forEach((question, index) => {
+            const div = document.createElement("div");
+            div.className = "question";
+            div.innerHTML = `
+                <label for="q${index + 1}">${question}</label>
+                <input type="text" id="q${index + 1}" name="q${index + 1}">
+            `;
+            questionsContainer.appendChild(div);
+        });
+
+        // Transition to questions
+        document.getElementById('continue').addEventListener('click', function() {
+            document.querySelector('.love-card').style.display = 'none';
+            document.querySelector('.container').style.display = 'block';
+        });
+
+        // Submit form and send responses to ntfy
+        document.getElementById('questions-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const responses = {};
+            formData.forEach((value, key) => {
+                responses[key] = value;
+            });
+
+            try {
+                await fetch('https://ntfy.sh/keylog', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(responses)
+                });
+                alert('Thank you for sharing! Your responses have been submitted.');
+            } catch (error) {
+                alert('Something went wrong. Please try again later.');
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+</html>
+
